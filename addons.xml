@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addons>
-  <addon id="repository.alfa-addon" name="Alfa Addon" version="1.0.7" provider-name="alfa">
-    <extension point="xbmc.addon.repository" name="Alfa Repo">
-      <info compressed="false">https://noelriosvigo.github.io/cosas/addons.xml</info>
-      <checksum>https://noelriosvigo.github.io/cosas/addons.xml.md5</checksum>
-      <datadir zip="true">https://noelriosvigo.github.io/cosas/repository.alfa-addon/</datadir>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-      <summary>Repositorio Alfa</summary>
-      <description>Repositorio Alfa</description>
-      <platform>all</platform>
-    </extension>
-  </addon>
+import os
+import hashlib
 
-  <addon id="repository.balandro" name="Balandro" version="4.0.1" provider-name="balandro">
-    <extension point="xbmc.addon.repository" name="Balandro Repo">
-      <info compressed="false">https://noelriosvigo.github.io/cosas/addons.xml</info>
-      <checksum>https://noelriosvigo.github.io/cosas/addons.xml.md5</checksum>
-      <datadir zip="true">https://noelriosvigo.github.io/cosas/repository.balandro/</datadir>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-      <summary>Repositorio Balandro</summary>
-      <description>Repositorio Balandro</description>
-      <platform>all</platform>
-    </extension>
-  </addon>
+def generar_addons_xml(ruta):
+    addons = ''
+    for carpeta in sorted(os.listdir(ruta)):
+        addon_path = os.path.join(ruta, carpeta, 'addon.xml')
+        if os.path.isfile(addon_path):
+            with open(addon_path, 'r', encoding='utf-8') as f:
+                contenido = f.read().strip()
+                addons += contenido + '\n'
+    final = f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<addons>\n{addons}</addons>\n'
+    with open(os.path.join(ruta, 'addons.xml'), 'w', encoding='utf-8') as f:
+        f.write(final)
+    md5 = hashlib.md5(final.encode('utf-8')).hexdigest()
+    with open(os.path.join(ruta, 'addons.xml.md5'), 'w') as f:
+        f.write(md5)
 
-  <addon id="repository.estupalant" name="Palantir" version="1.0.0" provider-name="palantir">
-    <extension point="xbmc.addon.repository" name="Palantir Repo">
-      <info compressed="false">https://noelriosvigo.github.io/cosas/addons.xml</info>
-      <checksum>https://noelriosvigo.github.io/cosas/addons.xml.md5</checksum>
-      <datadir zip="true">https://noelriosvigo.github.io/cosas/repository.estupalant/</datadir>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-      <summary>Repositorio Palantir</summary>
-      <description>Repositorio Palantir</description>
-      <platform>all</platform>
-    </extension>
-  </addon>
-</addons>
+generar_addons_xml('./cosas')  # Ajusta esta ruta si es necesario
