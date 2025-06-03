@@ -15,4 +15,4 @@ def generar_addons_xml(ruta):
     with open(os.path.join(ruta, 'addons.xml.md5'), 'w') as f:
         f.write(md5)
 
-generar_addons_xml('./mi-repo-kodi')
+generar_addons_xml('./cosas')
