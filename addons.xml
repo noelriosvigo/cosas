@@ -16,4 +16,4 @@ def generar_addons_xml(ruta):
     with open(os.path.join(ruta, 'addons.xml.md5'), 'w') as f:
         f.write(md5)
 
-generar_addons_xml('./cosas')  # Ajusta esta ruta si es necesario
+generar_addons_xml('./cosas')  # Cambia a tu ruta local si es diferente
